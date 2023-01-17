@@ -1,0 +1,10 @@
+INSERT INTO Area_trabajo VALUES(1,'Limpieza', 'Persona encargada de la limpieza del edificio');
+INSERT INTO Area_trabajo VALUES(2,'Servicio a la habitacion', 'Persona encargada de servir al huesped');
+INSERT INTO Area_trabajo VALUES(3,'Jardineria', 'Persona encargada de la limpieza y mantenimiento del jardin');
+INSERT INTO Area_trabajo VALUES(4,'Reparaciones', 'Persona encargada de hacer reparaciones en el inmueble');
+INSERT INTO Area_trabajo VALUES(5,'Electricidad', 'Persona encargada de reparaciones e instalaciones electricas');
+INSERT INTO Area_trabajo VALUES(6,'Cocina', 'Persona encargada de preparar los alimentos');
+INSERT INTO Area_trabajo VALUES(7,'Punto de venta', 'Persona encargada de realizar ventas');
+INSERT INTO Area_trabajo VALUES(8,'Caja', 'Persona encargada de atender en caja');
+INSERT INTO Area_trabajo VALUES(9,'Informatica', 'Persona encargada de dar mantenimiento a la red informatica del edificio');
+INSERT INTO Area_trabajo VALUES(10,'Gerencia', 'Persona encargada de manejar el Hotel');

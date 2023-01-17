@@ -1,0 +1,74 @@
+
+Para la tabla Dim_tiempo
+
+SELECT CONVERT(DATE, Pago_cliente.fecha_pago) AS tiempoId, DATEPART(YEAR, Pago_cliente.fecha_pago) AS año,
+ DATEPART(MONTH, Pago_cliente.fecha_pago) AS mes, DATEPART(WEEK, Pago_cliente.fecha_pago) semana,
+ DATEPART(QUARTER, Pago_cliente.fecha_pago) trimestre,
+((DATEPART(MONTH, Pago_cliente.fecha_pago)-1)/6)+1 AS semestre,
+  DATENAME(WEEKDAY, Pago_cliente.fecha_pago) dia_semana
+ FROM Reserva
+INNER JOIN Pago_cliente ON Reserva.cod_pago = Pago_cliente.cod_pago
+GROUP BY Pago_cliente.fecha_pago
+;
+
+Para la tabla Dim_reservas:
+
+SELECT cod_reserva, num_huespedes, nombre_categoria, 
+CONCAT(primer_nombre, ' ', segundo_nombre, ' ', primer_apellido, ' ', segundo_apellido) AS nombre_cliente,
+num_habitacion, Habitacion.cod_habitacion
+FROM Reserva
+INNER JOIN Habitacion ON Reserva.cod_habitacion = Habitacion.cod_habitacion
+INNER JOIN Cat_habitacion ON Habitacion.cod_cat_habitacion = Cat_habitacion.cod_categoria
+INNER JOIN Cliente ON Reserva.cod_cliente = Cliente.cod_cliente
+INNER JOIN Persona ON Cliente.cod_persona = Persona.cod_persona
+;
+
+Para la tabla Dim_categorias
+SELECT cod_categoria, nombre_categoria, descripcion_categoria FROM Cat_habitacion;
+
+
+Para la tabla Dim_empleados:
+
+SELECT  Empleado.cod_empleado, CONCAT(primer_nombre, ' ', segundo_nombre, ' ', primer_apellido, ' ', segundo_apellido) AS nombre_completo,
+num_identidad, pais_origen, Area_trabajo.cod_area, Empleado.sueldo, Area_trabajo.nombre_area,
+ DATEDIFF(YEAR, fecha_inicio_laborar,CONVERT(char(10), GETDATE(), 120))  AS años_laborar
+FROM Empleado
+INNER JOIN Persona ON Empleado.cod_persona = Persona.cod_persona
+INNER JOIN Area_trabajo ON Empleado.cod_area_trabajo = Area_trabajo.cod_area
+;
+
+Para la tabla Dim_cliente
+
+SELECT  pais_origen, CONCAT(primer_nombre, ' ', segundo_nombre, ' ', primer_apellido, ' ', segundo_apellido) AS nombre_completo,
+num_identidad, Cliente.cod_cliente FROM Cliente
+INNER JOIN Persona ON Cliente.cod_persona = Persona.cod_persona
+;
+
+Para la tabla Dim_producto
+
+SELECT cod_producto, nombre FROM Producto;
+
+
+Para la tabla de hechos
+
+SELECT cod_reserva,CONVERT(DATE, Pago_cliente.fecha_pago) AS tiempoId,
+ Cat_habitacion.cod_categoria, Empleado.cod_empleado,Cliente.cod_cliente, 
+ Cuenta_cliente.cod_producto,
+Pago_cliente.total_pago AS  total_venta_reservas,  SUM(Cuenta_cliente.costo_total) AS total_venta_producto, 
+COUNT(cuenta_cliente) AS produtos_vendidos FROM Reserva
+INNER JOIN Pago_cliente ON Reserva.cod_pago = Pago_cliente.cod_pago
+INNER JOIN Habitacion ON Reserva.cod_habitacion = Habitacion.cod_habitacion
+INNER JOIN Cat_habitacion ON Habitacion.cod_cat_habitacion = Cat_habitacion.cod_categoria
+INNER JOIN Empleado ON Reserva.cod_empleado = Empleado.cod_empleado
+INNER JOIN Cliente ON Reserva.cod_cliente = Cliente.cod_cliente
+INNER JOIN Cuenta_cliente ON Cliente.cod_cliente = Cuenta_cliente.cod_cliente
+
+GROUP BY Reserva.cod_reserva, Pago_cliente.fecha_pago, Pago_cliente.total_pago,
+Cat_habitacion.cod_categoria, Empleado.cod_empleado, Cliente.cod_cliente, Cuenta_cliente.cod_producto,
+Cuenta_cliente.cod_producto
+;
+
+
+
+
+

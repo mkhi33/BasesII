@@ -1,0 +1,53 @@
+Construcción del datamart:
+
+-> Obtener las preguntas de negocio
+
+	1- Se desea conocer el total de ventas en servicios de hospedaje.
+
+	2- Se desea conocer el total de ventas en productos que ofrece el hotel.
+
+	3- Se desea hacer un conteo de los productos vendidos.
+
+	2- Las ventas de servicios de hospedaje y ventas de productos se pueden conocer en base a reservas
+
+	3- De las reservas es necesario conocer el código de la reserva, total de huespedes en la reserva, nombre de la categoria de habitación, nombre del cliente que 	   realizo la reserva, numero y codigo de habitación.
+
+	4- Las ventas de estos servicios de hospedaje y de productos se deben de analizar por año, mes, semestre, trimestre, numero de semana, nombre del dia de 	   	   semana.
+
+	5- El total de venta de servicios de hospedaje tambien se puede obtener en base a categorias de habitacion.
+
+	6- De las categorias de habitación se decea obtener el código de la categoria, nombre de la categoria y descripción de la categoria.
+
+	7- Las ventas de servicios de hospedaje tambien se pueden obtener en base a empleados encargados de atender una reserva.
+
+	8- De los empleados se debe de obtener nombre completo del empeado, numero de identidad, pais de origen, código, area de trabajo, código del área de trabajo, 		   salario, total de años de laborar en el hotel.
+
+	9- Las ventas de servicios de hospedaje tambien se desea obtener en base a clienes.
+
+	10- De los clientes es necesario conocer el nombre del pais, nombre completo del cliente, numero de identidad, código del cliente.
+	11- Del pasis es necesario sabe el nombre.
+
+-> Identificar metrica o metricas:
+	-> total de ventas en servicios de hospedaje
+	-> total de ventas en productos que ofrece el hotel
+	-> conteo de los productos vendidos
+
+-> Identificar las tablas de dimensiones
+	Dimensión Para reservas {codigo, codigo_reserva, numero_huespedes, nombre_categoria, nombre_cliente, num_habitación. cod_habitación}
+
+	Dimensión de tiempo {código, año, mes, semana, trimestre, semestre,dia de semana}
+
+	Dimensión categoria de habitaciones {código, código categoria, nombre categoria, descripción de la categoria}
+
+	Dimensión Empleados {codigo, nombre completo, numero de identidad, pais, código empleado, codigo área trabajo, area trabajo, salario, total de años de laborar}
+	
+	Dimensión Cliente {código, pais, nombre completo del cliente, numero de identidad, código del cliente}
+
+	Dimensión productos{ código, codigo de producto,  nombre producto, cantidad, código cliente, nombre completo del cliente, numero de identidad, pais de origen.}
+
+
+
+-> Identificar la o las tablas de hechos:
+
+	Hechos ventas:
+		{código, id_dim_reserva, id_dim_tiempo, id_dim_categoria, id_dim_empleado, id_dim_cliente,  total_venta_servicios, total_venta_productos, 		 productos_vendidos}
